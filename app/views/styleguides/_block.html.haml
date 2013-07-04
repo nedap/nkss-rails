@@ -32,7 +32,7 @@
         %div{style: inner_style}= capture modifier.name, &code_block
 
     .sg-html
-      %pre.prettyprint.lang-html!= h(html)
+      %pre.prettyprint.lang-html!= h(html.gsub('', ''))
 
     .sg-html
-      %pre.prettyprint.lang-html!= h(source)
+      %pre.prettyprint.lang-html!= h(source.gsub('', ''))

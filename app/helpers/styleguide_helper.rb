@@ -38,8 +38,6 @@ module StyleguideHelper
     raise "Section '#{section_id}' not found."  unless section.filename
 
     example_html = capture(&block)
-    source = File.read(block.source_location[0]).split("\n")
-    source = source[block.source_location[1] - 1, source.length].join("\n")
 
     options = DEFAULT_OPTIONS.merge(options)
 
@@ -56,7 +54,7 @@ module StyleguideHelper
         canvas_class: classes.join(' '),
         code_block: block,
         html: example_html,
-        source: source,
+        source: capture_source(block),
         section: section,
         modifiers: (section.modifiers rescue Array.new),
         options: options,
@@ -119,6 +117,21 @@ module StyleguideHelper
     str = BlueCloth.new(text).to_html
     str = str.html_safe  if str.respond_to?(:html_safe)
     str
+  end
+
+  protected
+
+  def capture_source(block)
+    file, line = block.source_location
+    lines = File.read(file).split("\n")
+    indent = lines[line - 1].index(/[^ ]/) # level of the kss_block call
+    lines = lines[line, lines.length]  # ignore anything from before the call
+    [].tap do |content|
+      while current_line = lines.shift
+        break if current_line.index(/[^ ]/) <= indent
+        content << current_line
+      end
+    end.join("\n")
   end
 
 end
