@@ -1,5 +1,9 @@
 class StyleguidesController < ApplicationController
 
+  DEFAULT_STYLESHEETS_DIR =
+    File.join(Rails.root, 'app', 'assets', 'stylesheets')
+  DEFAULT_STYLEGUIDE_FILE = File.join(Rails.root, 'config', 'styleguides.yml')
+
   helper_method :styleguide_options
   helper_method :styleguide_title
   helper_method :styleguide_sections
@@ -31,7 +35,9 @@ private
   end
 
   def styleguide_options
-    @styleguide_options ||= YAML::load_file("#{Rails.root}/config/styleguides.yml")
+    @styleguide_options ||= YAML::load(
+      ERB.new(IO.read(styleguide_location)).result
+    )
   end
 
   def styleguide_title
@@ -43,7 +49,10 @@ private
   end
 
   def styleguide_root
-    path = styleguide_options['root'] || '/app/assets/stylesheets'
-    File.join Rails.root, path
+    styleguide_options['root'] || DEFAULT_STYLESHEETS_DIR
+  end
+
+  def styleguide_location
+    defined?(STYLEGUIDE_FILE) ? STYLEGUIDE_FILE : DEFAULT_STYLEGUIDE_FILE
   end
 end
