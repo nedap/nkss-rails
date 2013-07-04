@@ -3,6 +3,12 @@
 
 module StyleguideHelper
 
+  DEFAULT_OPTIONS = {
+    :background => 'light',
+    :align => 'left',
+    :code => 'true'
+  }.freeze
+
   # ### kss_block
   # Documents a styleguide block.
   #
@@ -32,13 +38,14 @@ module StyleguideHelper
     raise "Section '#{section_id}' not found."  unless section.filename
 
     example_html = capture(&block)
+    source = File.read(block.source_location[0]).split("\n")
+    source = source[block.source_location[1] - 1, source.length].join("\n")
 
-    defaults = { background: 'light', align: 'left', code: 'true' }
-    options = defaults.merge(options)
+    options = DEFAULT_OPTIONS.merge(options)
 
-    bg = "bg-#{options[:background]}"
-    align = "align-#{options[:align]}"
-    classes = [bg, align]
+    classes = []
+    classes << "bg-#{options[:background]}"
+    classes << "align-#{options[:align]}"
 
     inner_style = ''
     inner_style = "width: #{options[:width]}px; margin: 0 auto"  if options[:width]
@@ -49,6 +56,7 @@ module StyleguideHelper
         canvas_class: classes.join(' '),
         code_block: block,
         html: example_html,
+        source: source,
         section: section,
         modifiers: (section.modifiers rescue Array.new),
         options: options,

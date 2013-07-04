@@ -8,7 +8,7 @@
   %h3
     %a{href: "##{section.section}"}= section.section
 
-  %button.sg-button.sg-view-code HTML
+  %button.sg-button.sg-view-code HTML / Source
 
   .sg-description
     %span.sg-filename= section.filename
@@ -32,5 +32,7 @@
         %div{style: inner_style}= capture modifier.name, &code_block
 
     .sg-html
-      %pre.prettyprint.lang-html!= h(html.gsub('', ''))
+      %pre.prettyprint.lang-html!= h(html)
 
+    .sg-html
+      %pre.prettyprint.lang-html!= h(source)
