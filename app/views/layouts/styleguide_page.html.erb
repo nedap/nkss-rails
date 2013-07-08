@@ -1,36 +1,44 @@
--# # Templates: Styleguide page template
--# This formats your styleguides.
--#
--# It puts things into `:body` and `:head`, and calls the `layouts/styleguide`
--# layout, which you should have in your app.
--#
--# Don't like me? Just copy me into your
--# `app/views/layouts/styleguide_page.html.haml` and customize me.
+<%# Templates: Styleguide page template %>
+<%# This formats your styleguides. %>
 
-- content_for :body do
-  %button.sg-toggle-sidebar
+<%# It puts things into `:body` and `:head`, and calls the `layouts/styleguide` %>
+<%# layout, which you should have in your app. %>
 
-  %aside.sg-toc
-    %h1
-      %strong= styleguide_title
-      %small Style guide
+<%# Don't like me? Just copy me into your %>
+<%# `app/views/layouts/styleguide_page.html.erb` and customize me. %>
 
-    %ul
-      - styleguide_sections.each do |id, name|
-        %li
-          - href = @single_page ? "##{id}" : id
-          - klass = @single_page ? "" : (id == @section ? 'active' : '')
-          %a{class: klass, href: href}
-            %span.sg-number= "#{id}"
-            %span.sg-name= name
+<%- content_for(:body) do -%>
+  <button class='sg-toggle-sidebar'></button>
 
-  %section.sg-body
-    = yield
+  <aside class='sg-toc'>
+    <h1>
+      <strong><%= styleguide_title %></strong>
+      <small>Style guide</small>
+    </h1>
 
-  %script{src: "http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js"}
-  %script{src: "http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"}
-  %link{href: "http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css", type: "text/css", rel: "stylesheet"}
-  :javascript
+    <ul>
+      <%- styleguide_sections.each do |id, name| -%>
+        <li>
+          <%- href = @single_page ? "##{id}" : id -%>
+          <%- klass = @single_page ? "" : (id == @section ? 'active' : '') -%>
+          <a class='<%= klass %>' href='<%= href %>'>
+            <span class='sg-number'><%= id.to_s %></span>
+            <span class='sg-name'><%= name %></span>
+          </a>
+        </li>
+      <%- end -%>
+    </ul>
+  </aside>
+
+  <section class='sg-body'>
+    <%= yield %>
+  </section>
+
+  <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+  <script type='text/javascript' src='http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'></script>
+
+  <link href='http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css' type='text/css' rel='stylesheet' />
+  <script type='text/javascript'>
     // Pretty printer script
     (function() {
       var pretty = false;
@@ -133,9 +141,12 @@
       });
 
     })();
+  </script>
+<%- end -%>
 
-- content_for :head do
-  = stylesheet_link_tag 'styleguide'
-  = stylesheet_link_tag 'styleguide-extras'
+<%- content_for(:head) do -%>
+  <%= stylesheet_link_tag 'styleguide' %>
+  <%= stylesheet_link_tag 'styleguide-extras' %>
+<%- end -%>
 
-= render file: 'layouts/styleguide'
+<%= render file: 'layouts/styleguide' %>

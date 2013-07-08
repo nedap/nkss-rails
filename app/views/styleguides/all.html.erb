@@ -1,0 +1,8 @@
+<%- @sections.each do |id, title| -%>
+  <%- @section = id.to_i -%>
+  <h2 class='sg-page-title' id='<%= id %>'>
+    <strong><%= id %></strong>
+    <%= title %>
+  </h2>
+  <%= render file: "styleguides/#{@section}" %>
+<%- end -%>

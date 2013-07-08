@@ -1,0 +1,10 @@
+<div class='sg-specimen'>
+  <div class='sg-drop'>Ag</div>
+  <h3><%= ('a'..'z').to_a.map { |c| c.upcase + c.downcase }.join(" ") %></h3>
+  <p class='sg-small'><%= lorem.sentence %></p>
+  <p>
+    <strong><%= lorem.sentence %></strong>
+    <%= 2.times.map { lorem.paragraph }.join ' ' %>
+  </p>
+  <p><%= 2.times.map { lorem.paragraph }.join ' ' %></p>
+</div>

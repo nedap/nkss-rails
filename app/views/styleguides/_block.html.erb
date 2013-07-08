@@ -1,0 +1,51 @@
+<%# Templates: Block partial %>
+
+<%# This is the partial invoked when you use the `kss_guide` helper. %>
+<%# Don't like me? Just copy me into `app/views/styleguides/_block.html.haml` in %>
+<%# your app. %>
+
+<section class='sg-example' id='section.section'>
+  <h3>
+    <%= link_to section.section, "##{section.section}" %>
+  </h3>
+
+  <button class='sg-button sg-view-code'>HTML / Source</button>
+
+  <div class='sg-description'>
+    <span class='sg-filename'><%= section.filename %></span>
+    <%= raw markdown h(section.description) %>
+
+    <%- if section.modifiers.any? -%>
+      <ul class='sg-modifiers'>
+        <%- modifiers.each do |modifier| -%>
+          <li>
+            <strong><%= modifier.name %> - <%= modifier.description %></strong>
+          </li>
+        <%- end -%>
+      </ul>
+    <%- end -%>
+  </div>
+
+  <div class='sg-canvases'>
+    <div class='sg-canvas <%= canvas_class %>'>
+      <div style='<%= inner_style %>'><%= raw html %></div>
+    </div>
+
+    <%- modifiers.each do |modifier| -%>
+      <div class='sg-modifier sg-canvas <%= canvas_class %>'>
+        <span class='sg-modifier-name'><%= modifier.name %></span>
+        <div style='<%= inner_style %>'>
+          <%= capture(modifier.name, &code_block) %>
+        </div>
+      </div>
+    <%- end -%>
+
+    <div class='sg-html'>
+      <pre class='prettyprint lang-html'><%=h html.gsub('', '') %></pre>
+    </div>
+
+    <div class='sg-html'>
+      <pre class='prettyprint lang-html'><%=h source.gsub('', '') %></pre>
+    </div>
+  </div>
+</section>

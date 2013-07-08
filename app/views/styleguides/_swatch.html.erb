@@ -1,0 +1,10 @@
+<div class='sg-swatch <%= 'sg-dark' if dark %>'>
+  <div class='sg-text' style='color: <%= color %>'>
+    <%= color %>
+  </div>
+
+  <div class='sg-background' style='background: <%= color %>'>
+    <strong><%= identifier %></strong>
+    <%= content_tag(:small, description) if description %>
+  </div>
+</div>
