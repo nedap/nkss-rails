@@ -128,7 +128,8 @@ module StyleguideHelper
     lines = lines[line, lines.length]  # ignore anything from before the call
     [].tap do |content|
       while current_line = lines.shift
-        break if current_line.index(/[^ ]/) <= indent
+        break if current_line.index(/[^ ]/) <= indent &&
+          current_line.strip.present?
         content << current_line
       end
     end.join("\n")
