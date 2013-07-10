@@ -49,8 +49,7 @@
         }
 
         var $block = $(this).closest('.sg-example');
-        $block.find('.sg-html').toggleClass('sg-expanded');
-        $block.find('.sg-view-code').toggleClass('sg-expanded');
+        $block.find('.sg-html, .sg-view-code').toggleClass('sg-expanded');
       });
     })();
 
@@ -60,9 +59,6 @@
         $('body').toggleClass('sg-full');
       });
     })();
-
-    (function() {
-    });
 
     // Scrollspy script
     (function() {

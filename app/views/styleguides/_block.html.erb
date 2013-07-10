@@ -41,11 +41,11 @@
     <%- end -%>
 
     <div class='sg-html'>
-      <pre class='prettyprint lang-html'><%=h html.gsub('', '') %></pre>
+      <pre class='prettyprint lang-html'><%=h html.strip %></pre>
     </div>
 
     <div class='sg-html'>
-      <pre class='prettyprint lang-html'><%=h source.gsub('', '') %></pre>
+      <pre class='prettyprint lang-slim'><%=h source %></pre>
     </div>
   </div>
 </section>
