@@ -55,6 +55,7 @@ module StyleguideHelper
         code_block: block,
         html: example_html,
         source: capture_source(block),
+        source_language: source_language(block),
         section: section,
         modifiers: (section.modifiers rescue Array.new),
         options: options,
@@ -134,6 +135,11 @@ module StyleguideHelper
         content << current_line
       end
     end.join("\n")
+  end
+
+  def source_language(block)
+    file, _ = block.source_location
+    file.split('.').last if file.is_a? String
   end
 
 end
