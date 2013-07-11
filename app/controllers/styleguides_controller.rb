@@ -9,7 +9,7 @@ class StyleguidesController < ApplicationController
   helper_method :styleguide_sections
   helper_method :styleguide_root
 
-  before_filter :set_styleguide, :only => [ :show, :all ]
+  before_filter :set_styleguide, :only => [:show, :all]
 
   def show
     @section = params[:section].to_i
@@ -27,7 +27,7 @@ class StyleguidesController < ApplicationController
     render template: "styleguides/all", layout: 'styleguide_page'
   end
 
-private
+  private
 
   def set_styleguide
     require 'kss'
@@ -55,4 +55,5 @@ private
   def styleguide_location
     defined?(STYLEGUIDE_FILE) ? STYLEGUIDE_FILE : DEFAULT_STYLEGUIDE_FILE
   end
+
 end

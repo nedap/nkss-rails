@@ -125,14 +125,15 @@ module StyleguideHelper
   def capture_source(block)
     file, line = block.source_location
     lines = File.read(file).split("\n")
-    indent = lines[line - 1].index(/[^ ]/) # level of the kss_block call
+    target_indent = lines[line - 1].index(/[^\s]/) # level of the kss_block call
+    remove_indent = lines[line].index(/[^\s]/) - target_indent
     lines = lines[line, lines.length]  # ignore anything from before the call
     [].tap do |content|
       while current_line = lines.shift
         if current_line.strip.present?
-          break if current_line.index(/[^ ]/) <= indent
+          break if current_line.index(/[^\s]/) <= target_indent
         end
-        content << current_line
+        content << current_line.gsub(/^\s{#{remove_indent}}/,'')
       end
     end.join("\n")
   end
