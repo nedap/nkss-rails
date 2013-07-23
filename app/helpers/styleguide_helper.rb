@@ -54,7 +54,7 @@ module StyleguideHelper
         canvas_class: classes.join(' '),
         code_block: block,
         html: example_html,
-        source: capture_source(block),
+        source: capture_source(section_id, block),
         source_language: source_language(block),
         section: section,
         modifiers: (section.modifiers rescue Array.new),
@@ -122,12 +122,13 @@ module StyleguideHelper
 
   protected
 
-  def capture_source(block)
-    file, line = block.source_location
+  def capture_source(section_id, block)
+    file, _ = block.source_location # line doesn't always work correctly
     lines = File.read(file).split("\n")
-    target_indent = lines[line - 1].index(/[^\s]/) # level of the kss_block call
-    remove_indent = lines[line].index(/[^\s]/) - target_indent
-    lines = lines[line, lines.length]  # ignore anything from before the call
+    line = lines.index { |o| !! o.match(/kss_block[ (]["']#{section_id}['"][ )]/) }
+    target_indent = lines[line].index(/[^\s]/) # level of the kss_block call
+    remove_indent = lines[line + 1].index(/[^\s]/) - target_indent
+    lines = lines[line + 1, lines.length]  # ignore anything from before the call
     [].tap do |content|
       while current_line = lines.shift
         if current_line.strip.present?
