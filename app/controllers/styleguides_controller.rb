@@ -1,4 +1,4 @@
-class StyleguidesController < ApplicationController
+class StyleguidesController < ::ActionController::Base
 
   DEFAULT_STYLESHEETS_DIR =
     File.join(Rails.root, 'app', 'assets', 'stylesheets')
