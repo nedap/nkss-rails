@@ -17,9 +17,9 @@ describe StyleguideHelper do
     end # proc block end
   end
 
-  describe "#kss_block" do
-    pending "this method is better tested in an integration test"
-  end
+  # NOTE tested in acceptance
+  # describe "#kss_block" do
+  # end
 
   describe "#kss_specimen" do
     subject { helper.kss_specimen }
@@ -28,9 +28,20 @@ describe StyleguideHelper do
   end
 
   describe "#kss_swatch" do
-    subject { kss_swatch(name, color, options) }
+    subject { kss_swatch('a name', 'pink', options) }
 
-    pending "not sure if we'd use this method"
+    context "not specifying any options" do
+      subject { kss_swatch('a name', 'pink') }
+
+      it { should include 'color: pink' }
+      it { should include 'class=\'sg-swatch \'' }
+    end
+
+    context "specifying dark background" do
+      let(:options) { {:dark => true} }
+
+      it { should include 'class=\'sg-swatch sg-dark\'' }
+    end
   end
 
   describe "#lorem" do
