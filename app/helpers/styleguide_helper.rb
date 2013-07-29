@@ -37,13 +37,7 @@ module StyleguideHelper
 
     raise "Section '#{section_id}' not found."  unless section.filename
 
-    example_html = capture(&block)
-
     options = DEFAULT_OPTIONS.merge(options)
-
-    classes = []
-    classes << "bg-#{options[:background]}"
-    classes << "align-#{options[:align]}"
 
     inner_style = ''
     inner_style = "width: #{options[:width]}px; margin: 0 auto"  if options[:width]
@@ -51,9 +45,9 @@ module StyleguideHelper
     render \
       partial: 'styleguides/block',
       locals: {
-        canvas_class: classes.join(' '),
+        canvas_class: %W(bg-#{options[:background]} align-#{options[:align]}),
         code_block: block,
-        html: example_html,
+        html: capture(&block),
         source: capture_source(section_id, block),
         source_language: source_language(block),
         section: section,

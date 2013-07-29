@@ -1,8 +1,7 @@
 class StyleguidesController < ::ActionController::Base
 
-  DEFAULT_STYLESHEETS_DIR =
-    File.join(Rails.root, 'app', 'assets', 'stylesheets')
-  DEFAULT_STYLEGUIDE_FILE = File.join(Rails.root, 'config', 'styleguides.yml')
+  DEFAULT_STYLESHEETS_DIR = File.join(%W(#{Rails.root} app assets stylesheets))
+  DEFAULT_STYLEGUIDE_FILE = File.join(%W(#{Rails.root} config styleguides.yml))
 
   helper_method :styleguide_options
   helper_method :styleguide_title
@@ -18,13 +17,13 @@ class StyleguidesController < ::ActionController::Base
   end
 
   def index
-    redirect_to nkss.root_url + "1"
+    redirect_to nkss.root_url + '1'
   end
 
   def all
     @sections = styleguide_sections
     @single_page = true
-    render template: "styleguides/all", layout: 'styleguide_page'
+    render template: 'styleguides/all', layout: 'styleguide_page'
   end
 
   private
