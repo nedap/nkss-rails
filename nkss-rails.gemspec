@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
     'cute docs.'
 
   s.files = Dir['{app,config,lib}/**/*'] + ['Rakefile', 'README.md']
-  s.test_files = Dir['test/**/*']
+  s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'rails', '>= 3.2.0'
 
@@ -24,5 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'ffaker'
   s.add_dependency 'BlueCloth'
 
-  s.add_development_dependency 'rspec', '~> 2.14'
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'sqlite3'
+
 end

@@ -31,7 +31,9 @@ module StyleguideHelper
   # Example with options:
   #
   #     = kss_block '1.1', background: 'dark' do
-  #
+  #       %div.foo
+  #         Put markup here!
+
   def kss_block(section_id, options={}, &block)
     section = @styleguide.section(section_id)
 
@@ -119,10 +121,14 @@ module StyleguideHelper
   def capture_source(section_id, block)
     file, _ = block.source_location # line doesn't always work correctly
     lines = File.read(file).split("\n")
-    line = lines.index { |o| !! o.match(/kss_block[ (]["']#{section_id}['"][ )]/) }
+    line = lines.
+      index { |o| !! o.match(/kss_block[ (]["']#{section_id}['"][ )]/) }
+    unless line
+      raise IndexError, "kss_block '#{section_id}' not found in #{file}"
+    end
     target_indent = lines[line].index(/[^\s]/) # level of the kss_block call
     remove_indent = lines[line + 1].index(/[^\s]/) - target_indent
-    lines = lines[line + 1, lines.length]  # ignore anything from before the call
+    lines = lines[line + 1, lines.length]  # ignore anything before the call
     [].tap do |content|
       while current_line = lines.shift
         if current_line.strip.present?
