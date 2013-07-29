@@ -23,4 +23,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'kss'
   s.add_dependency 'ffaker'
   s.add_dependency 'BlueCloth'
+
+  s.add_development_dependency 'rspec', '~> 2.14'
 end
