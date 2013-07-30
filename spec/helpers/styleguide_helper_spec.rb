@@ -84,13 +84,13 @@ describe StyleguideHelper do
     subject { helper.source_language(block) }
 
     context "when block file ends with erb" do
-      let(:block) { mock(:block, :source_location => ['a.html.erb', 1]) }
+      let(:block) { double(:block, :source_location => ['a.html.erb', 1]) }
 
       it { should == 'erb' }
     end
 
     context "when block file ends with haml" do
-      let(:block) { mock(:block, :source_location => ['a.html.haml', 1]) }
+      let(:block) { double(:block, :source_location => ['a.html.haml', 1]) }
 
       it { should == 'haml' }
     end
