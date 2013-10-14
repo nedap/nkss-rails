@@ -5,11 +5,11 @@ require 'nkss/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = 'nkss-rails'
+  s.name        = 'bkss-rails'
   s.version     = Nkss::VERSION
   s.authors     = %w(Rico\ Sta.\ Cruz Nadarei,\ Inc. Steven\ Weller)
-  s.email       = %w(steven@80beans.com)
-  s.homepage    = 'http://nadarei.co/nkss-rails'
+  s.email       = %w(thijs@80beans.com)
+  s.homepage    = 'https://github.com/80beans/nkss-rails'
   s.summary     = 'Create pretty styleguides for your Rails 3.2 projects.'
   s.description = 'Nkss-rails is a drop-in, easy-to-use, gorgeous-by-default '\
     'Rails plugin you can put into your projects so you can instantly have '\
