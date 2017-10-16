@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe StyleguideHelper do
+describe StyleguideHelper, type: :helper do
   before(:all) do
     @block = proc do
       kss_block('2.1') do
@@ -15,6 +15,10 @@ describe StyleguideHelper do
         # last line of the block
       end # kss_block end
     end # proc block end
+  end
+
+  before do
+    helper.lookup_context.view_paths << 'app/views'
   end
 
   # NOTE tested in acceptance
@@ -47,7 +51,7 @@ describe StyleguideHelper do
   describe "#lorem" do
     subject { helper.lorem }
 
-    it { should == Faker::Lorem }
+    it { should == FFaker::Lorem }
   end
 
   describe "#markdown" do

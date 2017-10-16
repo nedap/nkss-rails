@@ -8,7 +8,7 @@ class StyleguidesController < ::ActionController::Base
   helper_method :styleguide_sections
   helper_method :styleguide_root
 
-  before_filter :set_styleguide, :only => [:show, :all]
+  before_action :set_styleguide, :only => [:show, :all]
 
   def show
     @section = params[:section].to_i

@@ -102,7 +102,7 @@ module StyleguideHelper
   def lorem
     require 'ffaker'
 
-    Faker::Lorem
+    FFaker::Lorem
   end
 
   # ### markdown
