@@ -1,21 +1,55 @@
-#!/usr/bin/env rake
+# encoding: utf-8
+
+require 'rubygems'
+require 'bundler'
 begin
-  require 'bundler/setup'
-rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+require 'rake'
+
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  gem.name = "nkss-rails"
+  gem.homepage = "http://github.com/nedap/nkss-rails"
+  gem.license = "MIT"
+  gem.summary = 'Create pretty styleguides for your Rails project.'
+  gem.description = 'Nkss-rails is a drop-in, easy-to-use, gorgeous-by-default '\
+    'Rails plugin you can put into your projects so you can instantly have '\
+    'cute docs.'
+  gem.email = %w(thijs@80beans.com)
+  gem.authors = %w(Rico\ Sta.\ Cruz Nadarei,\ Inc. Steven\ Weller)
+end
+Jeweler::RubygemsDotOrgTasks.new
+
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/test_*.rb'
+  test.verbose = true
 end
 
-APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
-load 'rails/tasks/engine.rake'
+desc "Code coverage detail"
+task :simplecov do
+  ENV['COVERAGE'] = "true"
+  Rake::Task['test'].execute
+end
 
-Bundler::GemHelper.install_tasks
+task :default => :test
 
-Dir[File.join(File.dirname(__FILE__), 'tasks/**/*.rake')].each {|f| load f }
+require 'rdoc/task'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
-require 'rspec/core'
-require 'rspec/core/rake_task'
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "nkss-rails #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
 
-desc "Run all specs in spec directory (excluding plugin specs)"
-RSpec::Core::RakeTask.new(:spec => 'app:db:test:prepare')
-
-task :default => :spec
+require 'gemfury/tasks'
+Gemfury.account = "nedap-healthcare"
+task :release => 'fury:release'
